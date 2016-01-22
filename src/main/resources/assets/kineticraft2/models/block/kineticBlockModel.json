@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "kineticraft2:blocks/kineticBlock",
+    "up": "kineticraft2:blocks/kineticBlock",
+    "north": "kineticraft2:blocks/kineticBlock",
+    "east": "kineticraft2:blocks/kineticBlock",
+    "south": "kineticraft2:blocks/kineticBlock",
+    "west": "kineticraft2:blocks/kineticBlock",
+    "particle": "kineticraft2:blocks/kineticBlock"
+  }
+}

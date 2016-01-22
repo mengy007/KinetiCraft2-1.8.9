@@ -1,0 +1,98 @@
+package com.techmafia.mcmods.KinetiCraft2.blocks.itemblocks.base;
+
+import cofh.api.energy.IEnergyContainerItem;
+import com.techmafia.mcmods.KinetiCraft2.tileentities.base.TileEntityKC2Powered;
+import com.techmafia.mcmods.KinetiCraft2.utility.ItemNBTHelper;
+import com.techmafia.mcmods.KinetiCraft2.utility.LogHelper;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+
+import java.util.List;
+
+/**
+ * Created by Meng on 10/17/2015.
+ */
+public class ItemBlockKC2Powered extends ItemBlock {
+    public ItemBlockKC2Powered(Block block) {
+        super(block);
+    }
+
+    public int getEnergyStored(ItemStack itemStack) {
+        if (itemStack.hasTagCompound()) {
+            if (itemStack.getTagCompound().hasKey("Energy")) {
+                return itemStack.getTagCompound().getInteger("Energy");
+            } else {
+                ItemNBTHelper.setInteger(itemStack, "Energy", 0);
+            }
+        }
+        return 0;
+    }
+
+    public int getMaxEnergyStored(ItemStack itemStack) {
+        return 0;
+    }
+
+    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4) {
+        super.addInformation(itemStack, entityPlayer, list, par4);
+
+        list.add(EnumChatFormatting.GREEN + "" + getEnergyStored(itemStack) + " / " + getMaxEnergyStored(itemStack) + " RF");
+    }
+
+    /**
+     * Called to actually place the block, after the location is determined
+     * and all permission checks have been made.
+     *
+     * @param itemStack The item stack that was used to place the block. This can be changed inside the method.
+     * @param entityPlayer The player who is placing the block. Can be null if the block is not being placed by a player.
+     * @param side The side the player (or machine) right-clicked on.
+     */
+    @Override
+    public boolean placeBlockAt(ItemStack itemStack, EntityPlayer entityPlayer, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
+        super.placeBlockAt(itemStack, entityPlayer, world, blockPos, side, hitX, hitY, hitZ, newState);
+
+        TileEntity te = world.getTileEntity(blockPos);
+
+        if (te != null && te instanceof TileEntityKC2Powered) {
+            ((TileEntityKC2Powered)te).setEnergyStored(getEnergyStored(itemStack));
+        }
+
+        return true;
+    }
+
+    @Override
+    public int getMetadata(int metadata) {
+        return metadata;
+    }
+
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+        if (!world.isRemote) {
+            player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + getEnergyStored(itemStack) + " / " + getMaxEnergyStored(itemStack) + " RF"));
+        }
+        return itemStack;
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        return true;
+        //return !(getEnergyStored(stack) == getMaxEnergyStored(stack));
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack) {
+        return 1D - ((double)getEnergyStored(stack) / (double)getMaxEnergyStored(stack));
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack itemStack) {
+        return super.getUnlocalizedName(itemStack) + itemStack.getItemDamage();
+    }
+}
