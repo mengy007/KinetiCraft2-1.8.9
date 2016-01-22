@@ -23,11 +23,7 @@ Items
 Blocks
 ======
 
-. Kinetic Energy Cube
-  . 4 cores
+. Leadstone Kinetic Energy Cube
 . Hardened Kinetic Energy Cube
-  . 8 cores
 . Reinforced Kinetic Energy Cube
-  . 16 cores
 . Resonant Kinetic Energy Cube
-  . 32 cores
