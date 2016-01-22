@@ -5,7 +5,7 @@ A mod that adds kinetic RF generation and storage. Run! Jump! Swing... but not t
 
 Requirements
 ============
-Forge, Thermal Expansion
+Forge
 
 Installation
 ============
