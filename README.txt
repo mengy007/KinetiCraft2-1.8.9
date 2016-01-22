@@ -1,5 +1,5 @@
 -------------------
-KinetiCraft2-1.7.10
+KinetiCraft2-1.8.9
 -------------------
 A mod that adds kinetic RF generation and storage. Run! Jump! Swing... but not too much or you'll hurt yourself.
 
